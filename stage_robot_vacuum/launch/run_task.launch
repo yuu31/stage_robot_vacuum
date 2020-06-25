@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <!-- 最終課題用のworldファイルを用いてstageを起動 -->
+    <node pkg = "stage_ros" name = "stage_ros" type = "stageros" args = "$(find stage_robot_vacuum)/world/map.world"/>
+
+    <!-- ロボット制御用ノード-->
+    <node pkg = "stage_robot_vacuum" name = "worker1" type = "control_robot_node" output = "screen"/>
+
+    <!-- 管理用ノード-->
+    <node pkg="stage_robot_vacuum" name="manager" type="stage_manager_node.py" output="screen"/>
+</launch>
