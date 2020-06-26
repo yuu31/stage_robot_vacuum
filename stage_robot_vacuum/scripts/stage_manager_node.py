@@ -3,6 +3,7 @@
 
 import random
 import time
+import os
 
 import rospy
 from geometry_msgs.msg import Point
@@ -65,6 +66,7 @@ class stage_manager:
 
         # 点数の設定
         self.score = 0.0
+        self.goal_score = 100
         self.time_score = 0.0
         self.p1_score = 10
         self.p2_score = 30
@@ -135,16 +137,27 @@ class stage_manager:
             if(self.end_flag == False):
                 print("ゴール！！")
                 # ゴール点数
-                self.score += 100
+                self.score += self.goal_score
                 # 残り時間
                 self.score += self.time_score
                 # 通過ポイント * a 点加算
-                self.score += sum(self.point_flag) * self.p1_score
-                self.score += sum(self.point_flag2) * self.p2_score
+                p1 = sum(self.point_flag) * self.p1_score
+                p2 = sum(self.point_flag2) * self.p2_score
+                self.score += p1
+                self.score += p2
                 self.score += self.miss_score
 
-                print("得点:{0:0f}点".format(self.score))
+                print("総合得点：{0:0f}点\n" \
+                      "ゴール到達：{1:0f}点\n" \
+                      "残り時間：{2:0f}点\n" \
+                      "通過ポイント1：{3:0f}点\n" \
+                      "通過ポイント2：{4:0f}点\n"  \
+                      "減点：{5:0f}点\n".format(self.score, \
+                      self.goal_score, self.time_score,\
+                      p1, p2, self.miss_score))
+
                 self.end_flag = True
+                os.system("rosnode kill /worker1")
 
     #チェックポイント2通過の判定
     def cs_Callback(self, signal):
@@ -163,7 +176,8 @@ class stage_manager:
                 pass
             else:
                 # シグナルONであるが，通過ポイント2と離れている場合の処理
-                self.miss_score -= -10
+                # 1回毎に10点減点
+                self.miss_score += -10
 
         else:
             pass
@@ -178,7 +192,8 @@ class stage_manager:
         #競技の残り時間の計算
         elapsed_time = time.time() - self.start
         remaining_time = COMPETITION_TIME - elapsed_time
-        self.time_score = remaining_time
+        # ゴール到達時間の得点
+        self.time_score = remaining_time / 2
 
         if(remaining_time > 0):
             if(self.end_flag == False):
@@ -187,13 +202,23 @@ class stage_manager:
             if(self.end_flag == False):
                 print("終了")
                 # 通過ポイント * a 点加算
-                self.score += sum(self.point_flag) * self.p1_score
-                self.score += sum(self.point_flag2) * self.p2_score
+                p1 = sum(self.point_flag) * self.p1_score
+                p2 = sum(self.point_flag2) * self.p2_score
+
+                self.score += p1
+                self.score += p2
                 self.score += self.miss_score
 
-                print("得点:{0:0f}点".format(self.score))
-                self.end_flag = True
+                print("総合得点：{0:0f}点\n" \
+                      "ゴール到達：{1:0f}点\n" \
+                      "残り時間：{2:0f}点\n" \
+                      "通過ポイント1：{3:0f}点\n" \
+                      "通過ポイント2：{4:0f}点\n"  \
+                      "減点：{5:0f}点\n".format(self.score, \
+                      0.0, 0.0, p1, p2, self.miss_score))
 
+                self.end_flag = True
+                os.system("rosnode kill /worker1")
 
 if __name__ == '__main__':
     try:
