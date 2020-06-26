@@ -1,4 +1,4 @@
-# stage_cleanup_competition
+# stage_robot_vacuum
 ロボットシミュレータstageを用いたロボット競技用のROSパッケージです．大学の講義にてロボットアプリケーション開発の経験を積む目的で作成されました．競技内容については下記をご覧ください．
 
 [中部大学ロボット理工学科 演習HP]( https://robot.isc.chubu.ac.jp/?p=1469)
