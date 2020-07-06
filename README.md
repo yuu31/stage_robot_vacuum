@@ -44,7 +44,7 @@ $ git clone http://github.com/yuu31/stage_robot_vacuum.git
 ```
 $ cd ~/WORK_SPACE
 $ catkin_make
-$ source devel/bashrc
+$ source devel/setup.bash
 ```
 
 本パッケージを実行する際には，roslaunchコマンドで必要なノード群を起動してください．
