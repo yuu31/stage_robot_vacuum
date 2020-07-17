@@ -34,7 +34,7 @@ ROSは，[公式HP](https://www.ros.org)にて推奨されているデスクト�
 gitを用いたコマンドで簡単にダウンロードすることができます．
 
 ```
-$ git clone http://github.com/yuu31/stage_robot_vacuum.git
+$ git clone https://github.com/yuu31/stage_robot_vacuum.git
 ```
 
 ## 起動方法
