@@ -59,7 +59,7 @@ define erratic position
   gui_nose 1
   drive "diff"
   topurg(pose [ 0.050 0.000 0 0.000 ])
-  topurg(pose [ 0.050 0.000 0 -90.000 ])
+#  topurg(pose [ 0.050 0.000 0 -90.000 ])
   mycamera(pose [ -0.40 0.00 0.00 90.0 ])
 )
 
